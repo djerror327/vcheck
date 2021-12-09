@@ -19,8 +19,10 @@ def read_mysql_version():
     # print(df_apache_version[0][19:25])
     for a in df_version[0]:
         print(a[650:659])
+        return a[650:659]
     # print(df_data[650:659].values)
 
 
 if __name__ == "__main__":
-    read_mysql_version()
+    a = read_mysql_version()
+    print(a)

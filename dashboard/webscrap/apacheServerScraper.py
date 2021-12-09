@@ -17,6 +17,7 @@ def read_apache_server_version():
     df_apache_version = df_version.iloc[-1]
 
     print(df_apache_version[0][19:25])
+    return df_apache_version[0][19:25]
 
 
 if __name__ == "__main__":
