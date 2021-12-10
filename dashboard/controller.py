@@ -1,4 +1,5 @@
 from .models import Version
+from .util.filereader import FileReader
 from .webscrap import apacheServerScraper as ApacheScraper
 from .webscrap import mysqlSaraper as MySQLScraper
 from .webscrap import openJDKScraper as OpenJDKScraper
@@ -12,8 +13,7 @@ class Instances:
     __instances = []
 
     def __init__(self):
-        ips = ["10.120.50.40", "10.120.50.50", "10.120.50.60", "10.120.50.70", "110.120.50.90", "110.120.50.35"]
-
+        ips = FileReader().read_ips()
         # clear static array
         Instances.__instances = []
 
