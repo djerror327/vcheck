@@ -20,19 +20,13 @@ class Instances:
         # mysql 8 list
         for ip in ips:
             Instances.__instances.append(
-                Version(ip, "MySQL update : " + Instances.__mysql_8_latest_version, "MySQL installed : 8.0.55")
+                Version(ip, "MySQL latest : " + Instances.__mysql_8_latest_version, "MySQL installed : 8.0.55")
             )
-
-        # apache server list
-        for ip in ips:
             Instances.__instances.append(
-                Version(ip, "Apache update : " + Instances.__apache_latest_version, "Apache installed : 2.2.0")
+                Version(ip, "Apache latest : " + Instances.__apache_latest_version, "Apache installed : 2.2.0")
             )
-
-        # OpenJDK list
-        for ip in ips:
             Instances.__instances.append(
-                Version(ip, "OpenJDK update : " + Instances.__openjdk_latest_version, "OpenJDK installed : 8u200-b01")
+                Version(ip, "OpenJDK latest : " + Instances.__openjdk_latest_version, "OpenJDK installed : 8u200-b01")
             )
 
     @staticmethod
