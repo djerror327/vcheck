@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def read_mysql_version():
+def read_openjdk_version():
     url = "https://wiki.openjdk.java.net/display/jdk8u/Main"
     res = requests.get(url)
     soup = BeautifulSoup(res.content, "lxml")
