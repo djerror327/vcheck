@@ -1,0 +1,53 @@
+---
+- name: Software Versions
+  hosts: servers
+
+  tasks:
+    - name: Remove and Create Outpout File java_version
+      local_action: template src=./templates/version_template dest="./output/java_version"
+    - name: Remove and Create Outpout File mysql_version
+      local_action: template src=./templates/version_template dest="./output/mysql_version"
+    - name: Remove and Create Outpout File apache_server_version
+      local_action: template src=./templates/version_template dest="./output/apache_server_version"
+
+    - name: Check Java Vesion
+      command: java -version
+      become_user: yes
+      register: java_result
+
+    - debug:
+        msg="{{java_result.stderr_lines}}"
+      when: java_result is failed
+
+    - debug:
+        msg="{{java_result.stderr_lines}}"
+      when: java_result is success
+    - local_action: lineinfile line="{{ansible_default_ipv4.address}} {{java_result.stderr_lines}}" path=./output/java_version
+
+    - name: Check MySQL Version
+      command: mysql -V
+      become_user: yes
+      register: mysql_result
+
+    - debug:
+        msg="{{mysql_result.stdout_lines}}"
+      when: mysql_result is failed
+
+    - debug:
+        msg="{{mysql_result.stdout_lines}}"
+      when: mysql_result is success
+    - local_action: lineinfile line="{{ansible_default_ipv4.address}} {{mysql_result.stdout_lines}}" path=./output/mysql_version
+
+    - name: Check Apache Server Version
+      command: apache2 -v
+      become_user: yes
+      register: apache_server_result
+
+    - debug:
+        msg="{{apache_server_result.stdout_lines}}"
+      when: apache_server_result is failed
+
+    - debug:
+        msg="{{apache_server_result.stdout_lines}}"
+      when: apache_server_result is success
+    - local_action: lineinfile line="{{ansible_default_ipv4.address}} {{apache_server_result.stdout_lines}}" path=./output/apache_server_version
