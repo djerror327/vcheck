@@ -93,8 +93,8 @@ class Instances:
 
     @staticmethod
     def run_ansible(file_path):
-        result = subprocess.Popen(F"sh {file_path}", shell=True, stdout=subprocess.PIPE, universal_newlines=True).communicate()[
-            0]
+        result = subprocess.Popen(F"sh {file_path}", shell=True, stdout=subprocess.PIPE,
+                                  universal_newlines=True).communicate()[0]
         print(result)
 
 
