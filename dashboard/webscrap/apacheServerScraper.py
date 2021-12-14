@@ -16,7 +16,7 @@ def read_apache_server_version():
     df_version = df[0:107]
     df_apache_version = df_version.iloc[-1]
 
-    print(df_apache_version[0][19:25])
+    print("apache latest version : " + df_apache_version[0][19:25])
     return df_apache_version[0][19:25]
 
 

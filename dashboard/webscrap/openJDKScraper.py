@@ -17,12 +17,12 @@ def read_openjdk_version():
     # df_apache_version = df_version.iloc[-1]
     df_data = df_version[0]
     # print(df_apache_version[0][19:25])
-    for a in df_version[0]:
-        print(a[650:659])
-        return a[650:659]
+    for version in df_version[0]:
+        print("open jdk latest version " + version[650:659])
+        return version[650:659]
     # print(df_data[650:659].values)
 
 
 if __name__ == "__main__":
-    a = read_mysql_version()
+    a = read_openjdk_version()
     print(a)
