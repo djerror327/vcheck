@@ -81,11 +81,6 @@ class Instances:
     def get_instances_details():
         return Instances.__sorted_instances
 
-    @staticmethod
-    def read_ansible_out():
-        file_list = FileReader.read_ansible_out()
-        print(file_list["ANSIBLE_JAVA_OUT_PATH"])
-
 
 if __name__ == "__main__":
     a = Instances()

@@ -56,10 +56,11 @@ class FileReader:
         #     count += 1
 
     @staticmethod
-    def read_ips():
+    def get_scheduler_time():
         data = FileReader.__read_yml()
-        return data.get('servers').get('ip')
+        return data.get('schedule').get('seconds')
 
 
 if __name__ == "__main__":
-    FileReader().read_ansible_out()
+    a = FileReader().read_ips()
+    print(a)
