@@ -9,6 +9,7 @@ class FileReader:
     __ANSIBLE_JAVA_OUT_PATH = Path.joinpath(__ROOT_DIR, "ansible/output/java_version")
     __ANSIBLE_APACHE_OUT_PATH = Path.joinpath(__ROOT_DIR, "ansible/output/apache_server_version")
     __ANSIBLE_MYSQL_OUT_PATH = Path.joinpath(__ROOT_DIR, "ansible/output/mysql_version")
+    __ANSIBLE_START_SH_PATH = Path.joinpath(__ROOT_DIR, "ansible/start.sh")
 
     @staticmethod
     def __read_yml():
@@ -56,11 +57,15 @@ class FileReader:
         #     count += 1
 
     @staticmethod
-    def get_scheduler_time():
+    def ansible_start_sh_path():
+        return FileReader.__ANSIBLE_START_SH_PATH
+
+    @staticmethod
+    def scheduler_time():
         data = FileReader.__read_yml()
         return data.get('schedule').get('seconds')
 
 
 if __name__ == "__main__":
-    a = FileReader().read_ips()
+    a = FileReader().get_app_root_path()
     print(a)

@@ -1,3 +1,5 @@
+import subprocess
+
 import pandas as pd
 
 from .models import Version
@@ -9,18 +11,26 @@ from .webscrap import openJDKScraper as OpenJDKScraper
 
 class Instances:
     # create a cron for refresh
-    __mysql_8_latest_version = MySQLScraper.read_mysql_version()
-    __apache_latest_version = ApacheScraper.read_apache_server_version()
-    __openjdk_latest_version = OpenJDKScraper.read_openjdk_version()
+    # __mysql_8_latest_version = MySQLScraper.read_mysql_version()
+    # __apache_latest_version = ApacheScraper.read_apache_server_version()
+    # __openjdk_latest_version = OpenJDKScraper.read_openjdk_version()
     __instances = []
     __sorted_instances = []
 
     def __init__(self):
+        # web scrap
+        mysql_8_latest_version = MySQLScraper.read_mysql_version()
+        apache_latest_version = ApacheScraper.read_apache_server_version()
+        openjdk_latest_version = OpenJDKScraper.read_openjdk_version()
+
         # clear static array
         Instances.__instances = []
         Instances.__sorted_instances = []
 
-        # read output files
+        # run ansible script
+        Instances.run_ansible(FileReader.ansible_start_sh_path())
+
+        # read output files of ansible
         file_list = FileReader.read_ansible_out()
         java_out_file = file_list["ANSIBLE_JAVA_OUT_PATH"]
         apache_out_file = file_list["ANSIBLE_APACHE_OUT_PATH"]
@@ -33,7 +43,7 @@ class Instances:
         for data in java_version_arr:
             # print(ip_arr[count] + " " + data[1] + "-" + data[2])
             Instances.__instances.append(
-                Version(ip_arr[count], "OpenJDK latest : " + Instances.__openjdk_latest_version,
+                Version(ip_arr[count], "OpenJDK latest : " + openjdk_latest_version,
                         "OpenJDK installed : " + data[1] + "-" + data[2])
             )
             count += 1
@@ -45,7 +55,7 @@ class Instances:
         for data in apache_version_arr:
             # print(ip_arr[count] + " " + data[1])
             Instances.__instances.append(
-                Version(ip_arr[count], "Apache latest : " + Instances.__apache_latest_version,
+                Version(ip_arr[count], "Apache latest : " + apache_latest_version,
                         "Apache installed : " + data[1])
             )
             count += 1
@@ -57,7 +67,7 @@ class Instances:
         for data in mysql_version_arr:
             # print(ip_arr[count] + " " + data)
             Instances.__instances.append(
-                Version(ip_arr[count], "MySQL latest : " + Instances.__mysql_8_latest_version,
+                Version(ip_arr[count], "MySQL latest : " + mysql_8_latest_version,
                         "MySQL installed : " + data)
             )
             count += 1
@@ -80,6 +90,13 @@ class Instances:
     @staticmethod
     def get_instances_details():
         return Instances.__sorted_instances
+
+    @staticmethod
+    def run_ansible(file_path):
+        result = \
+        subprocess.Popen(F"sh {file_path}", shell=True, stdout=subprocess.PIPE, universal_newlines=True).communicate()[
+            0]
+        print(result)
 
 
 if __name__ == "__main__":
